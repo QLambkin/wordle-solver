@@ -30,7 +30,7 @@ def main():
         guess_results = []
         for position in [0,1,2,3,4]:
             while True:
-                result = input(f"Enter Y, G, or B for position {position}: ")
+                result = input(f"Enter Y, G, or B for position {position + 1}: ")
                 if result in ("Y","G","B"):
                     guess_results.append((guess[position], result, position))
                     # print(guess_results)
