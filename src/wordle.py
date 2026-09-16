@@ -1,17 +1,18 @@
 import loader
 import matcher
 
-def find_possible_words(all_words, guess_results):
+def find_possible_words(all_words, guess_results, past_answers):
     possible_words = []
 
     for word in all_words:
-        if matcher.matches_constraints(word, guess_results):
+        if matcher.matches_constraints(word, guess_results) and word not in past_answers:
             possible_words.append(word)
 
     return possible_words
 
 def main():
     words = loader.load_words()
+    past_answers = loader.load_past_answers()
     all_constraints = []
 
     # While the user is still guessing
@@ -32,7 +33,7 @@ def main():
                 result = input(f"Enter Y, G, or B for position {position}: ")
                 if result in ("Y","G","B"):
                     guess_results.append((guess[position], result, position))
-                    print(guess_results)
+                    # print(guess_results)
                     break
                 else:
                     print("Guess must be Y, G, or B, try again")
@@ -42,7 +43,7 @@ def main():
             all_constraints.append(results)
 
         # Find possible guesses and display results
-        possible_words = sorted(find_possible_words(words, all_constraints))
+        possible_words = sorted(find_possible_words(words, all_constraints, past_answers))
         print(f"Possible Words: {possible_words}")
 
         while True:
